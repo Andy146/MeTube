@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+    border-collapse: collapse;
+}
+
+html{
+    scroll-behavior: smooth;
+    margin: 0;
+}
+
+body{
+    overflow-x: hidden;
+    background: #EEE;
+    margin: 0;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+#nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#nav_search_div{
+    width:50%;
+}
+
+#nav_search_bar{
+    width: 80%;
+}
+
+#nav_profile_image{
+    border-radius: 50%;
+    width: 3%;
+}
