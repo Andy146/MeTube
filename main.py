@@ -5,6 +5,8 @@ import flask
 import sys
 import os
 from urllib.parse import quote
+import lib.search as search
+import lib.db_connect as db_lib
 
 root = os.path.realpath(os.path.dirname(__file__))
 
@@ -12,23 +14,9 @@ app = flask.Flask(__name__, template_folder=f'{root}/website/html', static_folde
 print(app.root_path)
 print(root)
 
-def db_connect():
-    try:
-        conn = mariadb.connect(
-            user="admin",
-            password="Passw0rd",
-            host="localhost",
-            port=3306,
-            db='me_tube')
-    except mariadb.Error as e:
-        print(f"Error connecting to MariaDB Platform: {e}")
-        sys.exit(1)
-    
-    return conn
-
 @app.route('/')
 def home():
-    conn = db_connect()
+    conn = db_lib.db_connect()
 
     cursor = conn.cursor(dictionary=True)   #Means returned data will be in a dictionary instead of a tuple
     query = 'select * from video'
@@ -44,7 +32,7 @@ def home():
 
 @app.route('/play/<int:video_id>/', methods=["GET", "POST"])
 def player(video_id):
-    conn = db_connect()
+    conn = db_lib.db_connect()
 
     cursor = conn.cursor(dictionary=True)
     query = f'select * from video where video_id={video_id}'
@@ -103,7 +91,7 @@ def upload_files():
         return flask.redirect('/')
 
 def insert_video_data(data):
-    conn = db_connect()
+    conn = db_lib.db_connect()
     
     cursor = conn.cursor()
 
@@ -149,40 +137,5 @@ def insert_video_data(data):
 def search_page():
     query = flask.request.args['query']
     # query = quote(query)
-    results = search(query)
+    results = search.search(query)
     return flask.render_template('search.html', query=query, results=results)
-
-def search(query):
-    conn = db_connect()
-    cursor = conn.cursor(dictionary=True)
-    
-    sql_query = "SELECT * FROM video"
-    cursor.execute(sql_query)
-
-
-    db_return = cursor.fetchall()
-    results = set()     #Inits as set to not have duplicate results
-    query = query.split(' ')
-
-    for keyword in query:
-        for video in db_return:
-            if(keyword.lower() in video['title'].lower()):
-                results.add(video['video_id'])
-            elif(keyword.lower() in video['description'].lower()):
-                results.add(video['video_id'])
-    
-    if(len(results)==1):        #If there is only one result, then you can't create a valid tuple for sql, therefore this is an exception
-        results = list(results)
-        results = int(results[0])
-        sql = f"SELECT * FROM video WHERE video_id={results}"
-    elif(len(results)==0):
-        return list()
-    else:
-        results = tuple(results)
-        sql = f"SELECT * FROM video WHERE video_id IN {results}"
-        
-    cursor.execute(sql)
-
-    results = cursor.fetchall()
-
-    return results
