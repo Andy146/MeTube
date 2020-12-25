@@ -3,7 +3,7 @@ YouTube clone for IT class
 
 Running on a flask server locally for now, might integrate into django later
 
-###To do list
+### To do list
 - Search by title and desc
 - Add tags during upload
 - Searh with tags as well
@@ -12,7 +12,7 @@ Running on a flask server locally for now, might integrate into django later
 - Add profile-support (low priority, see other list for details)
 
 
-###Profile support to do
+### Profile support to do
 - Log-in page
 - Profile page with every uploaded video
 - Force log-in during upload
