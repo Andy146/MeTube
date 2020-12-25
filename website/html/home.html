@@ -3,20 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>MeTube</title>
-    <link rel='stylesheet' href='../css/style.css'>
+    <link rel='stylesheet' href="{{url_for('static', filename='website/css/style.css')}}">
   </head>
   <body>
     <header></header>
     <main>
       <div id='nav'>
-        <img src='../../assets/logo.png' width='7%' alt='MeTube'>
+        <a href='/' id='logo_img_link' title='Home'><img src='/MeTube/assets/logo.png' alt='MeTube'></a>
         <div id='nav_search_div'>
-          <input type="text" placeholder="Search..." id='nav_search_bar'>
-
-          <input type='submit' value='Search' id='nav_search_btn'>
+          <form action="/search/" method="GET">
+            <input type="text" placeholder="Search..." id='nav_search_bar' name='query'>
+  
+            <input type='submit' value='Search' id='nav_search_btn' class='nav_btn'>
+          </form>
         </div>
+        <div id='nav_end'>
+          <a href="/upload/" id='nav_upload_btn' class='nav_btn'>Upload</a>
+  
+          <img src="/MeTube/assets/blank_user.svg" alt="Blank user image" id='nav_profile_image'>
+        </div>
+      </div>
 
-        <img src="../../assets/blank_user.svg" alt="Blank user image" id='nav_profile_image'>
+      <div id='preview_container'>
+        {% for preview_list in previews %}
+          <a class='video_preview' href='/play/{{preview_list["video_id"]}}/'>
+            <img src="/MeTube/videos/{{preview_list['video_id']}}/thumbnail.png" class='preview_thumbnail'>
+            <div class='preview_title'>{{ preview_list['title'] }}</div>
+            <div class='preview_desc'>{{ preview_list['description'] }}</div>
+          </a>
+        {% endfor %}
       </div>
     </main>
     <footer></footer>
