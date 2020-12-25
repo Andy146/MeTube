@@ -24,46 +24,25 @@
           </div>
     </nav>
 
+    
+
     <main>
-      <script>
-        // function drop(ev){
-        //   ev.preventDefault();
-        //   var video = document.getElementById('video_upload');
-        //   var video_field_id = video.htmlFor;
-
-        //   var video_field = document.getElementById(video_field);
-
-        //   if(ev.dataTransfer.items) {
-        //     // Use DataTransferItemList interface to access the file(s)
-        //     for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-        //       // If dropped items aren't files, reject them
-        //       if (ev.dataTransfer.items[i].kind === 'file') {
-        //         //Get file object
-        //         var file = ev.dataTransfer.items[i].getAsFile();
-        //         video_field.value = file;
-        //       }
-        //     }
-        //   } else {
-        //     // Use DataTransfer interface to access the file(s)
-        //     for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-        //       video_field.value = ev.dataTransfer.files[i].name;
-        //     }
-        //   }
-        // }
-        // function dragOver(event){
-        //   event.preventDefault()
-        // }
-      </script>
         <form action='/uploader/' method='POST' enctype="multipart/form-data" id='upload_form'>
 
             <input type="text" name="title" id="upload_title" required placeholder="Title">
 
             <textarea name="desc" id="desc" cols="30" rows="10" required maxlength="200" placeholder="Description"></textarea>
 
-            <label for="video_upload" ondrop="drop(event)" ondragover="dragOver(event)">Drag video here, or add it by clicking below</label>
+            <label for="video_upload" id="video_upload_label">
+              <p>Click here to add a video</p>
+              <p id="video_upload_filename_indicator">No file selected</p>
+            </label>
             <input type="file" name="video_upload" id="video_upload" required>
 
-            <label for="thumb_upload" ondrop="drop(event)" ondragover="dragOver(event)">Drag a thumbnail here, or add it by clicking below</label>
+            <label for="thumb_upload" id="thumb_upload_label">
+              <p>Click here to add a thumbnail</p>
+              <p id="thumb_upload_filename_indicator">No file selected</p>
+            </label>
             <input type="file" name="thumb_upload" id="thumb_upload" required>
 
             <textarea name="tags" id="tags" cols="30" rows="10" placeholder="Video tags, separeted by commas (',')"></textarea>
@@ -72,6 +51,18 @@
             <input type="submit" value="Upload">
         </form>
     </main>
+
+    <script defer>
+      document.getElementById('video_upload').addEventListener('input',
+        function (event) {
+          document.getElementById('video_upload_filename_indicator').innerHTML = document.getElementById('video_upload').files[0].name;
+        });
+
+      document.getElementById('thumb_upload').addEventListener('input',
+        function (event) {
+          document.getElementById('thumb_upload_filename_indicator').innerHTML = document.getElementById('thumb_upload').files[0].name;
+        });
+    </script>
     
 </body>
 </html>

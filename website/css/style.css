@@ -185,10 +185,17 @@ main{
     padding: 20px 10px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 #upload_form label:hover{
-    /* cursor: copy; */
+    cursor: copy;
+}
+
+#thumb_upload_label{
+    margin-bottom: 20px !important;
 }
 
 #upload_form textarea{
@@ -201,6 +208,6 @@ main{
     width: initial;
 }
 
-/* #upload_form input[type='file']{
+#upload_form input[type='file']{
     display: none;
-} */
+}
