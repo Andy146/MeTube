@@ -139,3 +139,34 @@ def search_page():
     # query = quote(query)
     results = search.search(query)
     return flask.render_template('search.html', query=query, results=results)
+
+@app.route('/user/<string:username>')
+def profile_page(username):
+    conn = db_lib.db_connect()
+    cursor = conn.cursor(dictionary=True)
+    query = f"SELECT * FROM user WHERE username='{username}'"
+
+    cursor.execute(query)
+    user_data = cursor.fetchall()
+    if(len(user_data) == 0):
+        user_exists = False
+        user_has_videos = False
+        video_data = list()
+    else:
+        user_exists = True
+        try:
+            root = os.path.realpath(os.path.dirname(__file__))
+            with open(f'{root}/users/{user_data[0]["user_id"]}', 'r') as f:
+                pass
+            user_data[0]['img'] = f'/MeTube/users/{user_data[0]["user_id"]}/profile.png'
+        except FileNotFoundError:
+            user_data[0]['img'] = '/MeTube/assets/blank_user.svg'
+
+        query = f"SELECT * FROM video WHERE uploader_id={user_data[0]['user_id']}"
+        cursor.execute(query)
+        video_data = cursor.fetchall()
+        if(len(video_data) == 0):
+            user_has_videos = False
+        else:
+            user_has_videos = True
+    return flask.render_template('profile.html', user_data=user_data, videos=video_data, user_exists=user_exists, username=username, user_has_videos=user_has_videos)

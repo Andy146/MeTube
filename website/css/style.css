@@ -211,3 +211,18 @@ main{
 #upload_form input[type='file']{
     display: none;
 }
+
+#user_information{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.1);
+    border: 3px solid rgba(0,0,0,0.2);
+}
+
+#user_information span{
+    font-size: 28px;
+    margin: 0 40px;
+}
