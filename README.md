@@ -13,8 +13,8 @@ Running on a flask server locally for now, might integrate into django later
 
 
 ### Profile support to do
-- Log-in page
-- Profile page with every uploaded video
-- Force log-in during upload
-- Make a clickable link under video on /play/ to uploaders profile page
-- Add storage of uploader in INSERT-statement during upload
+- &#10003; Log-in page
+- &#10003; Profile page with every uploaded video
+- &#10003; Force log-in during upload
+- &#10003; Make a clickable link under video on /play/ to uploaders profile page
+- &#10003; Add storage of uploader in INSERT-statement during upload
