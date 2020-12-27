@@ -1,28 +1,12 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <title>MeTube</title>
-    <link rel='stylesheet' href="{{url_for('static', filename='website/css/style.css')}}">
+    {% include 'head.html' %}
   </head>
   <body>
     <header></header>
     <main>
-      <div id='nav'>
-        <a href='/' id='logo_img_link' title='Home'><img src='/MeTube/assets/logo.png' alt='MeTube'></a>
-        <div id='nav_search_div'>
-          <form action="/search/" method="GET">
-            <input type="text" placeholder="Search..." id='nav_search_bar' name='query'>
-  
-            <input type='submit' value='Search' id='nav_search_btn' class='nav_btn'>
-          </form>
-        </div>
-        <div id='nav_end'>
-          <a href="/upload/" id='nav_upload_btn' class='nav_btn'>Upload</a>
-  
-          <img src="/MeTube/assets/blank_user.svg" alt="Blank user image" id='nav_profile_image'>
-        </div>
-      </div>
+      {% include 'nav.html' %}
       <div id='player_main'>
         <div id='player_main_player'>
           <video controls width='1280' height='720'>
@@ -30,6 +14,10 @@
               Your browser does not support the video player
           </video>
           <h1 id='player_video_title'>{{video['title']}}</h1>
+          <a href="/user/{{uploader['username']}}" id='player_uploader_link' title='{{uploader["username"]}}s profile'>
+            <img src="{{uploader['img']}}" alt="{{uploader['username']}}s profile image" width='75px'>
+            <span>{{uploader['username']}}</span>
+          </a>
 
           <span id='player_video_desc'>{{video['description']}}</span>
 

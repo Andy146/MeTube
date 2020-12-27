@@ -7,10 +7,12 @@ import os
 from urllib.parse import quote
 import lib.search as search
 import lib.db_connect as db_lib
+import uuid
 
 root = os.path.realpath(os.path.dirname(__file__))
 
 app = flask.Flask(__name__, template_folder=f'{root}/website/html', static_folder=root)
+app.secret_key = uuid.uuid4().hex
 print(app.root_path)
 print(root)
 
@@ -48,15 +50,29 @@ def player(video_id):
         query = f'select * from video where video_id between {video_id-10} and {video_id-1}'
         cursor.execute(query)
         preview_data = cursor.fetchall()
+    
+    query = f"SELECT user_id, username FROM user WHERE user_id={video_data[0]['uploader_id']}"
+    cursor.execute(query)
+    uploader = cursor.fetchall()[0]
+
+    try:
+        root = os.path.realpath(os.path.dirname(__file__))
+        with open(f'{root}/users/{uploader["user_id"]}/profile.png', 'r') as f:
+            f.close()
+        uploader['img'] = f'/MeTube/users/{uploader["user_id"]}/profile.png'
+    except FileNotFoundError:
+        uploader['img'] = '/MeTube/assets/blank_user.svg'
 
     cursor.close()
     conn.close()
 
-    return flask.render_template('player.html', video=video_data[0], previews=preview_data)
+    return flask.render_template('player.html', video=video_data[0], previews=preview_data, uploader=uploader)
     # return video_data[0]
 
 @app.route('/upload/')
 def upload_page():
+    if('username' not in flask.session):    #Redirects users to login page if they are trying to upload without being logged in
+        return flask.redirect(flask.url_for('login'))
     return flask.render_template('upload.html')
 
 @app.route('/uploader/', methods=['POST'])
@@ -70,7 +86,7 @@ def upload_files():
         data = {
             "title":flask.request.form['title'],
             "desc":flask.request.form['desc'],
-            "uploader":1
+            "uploader":flask.session['user_id']
         }
         try:
             tags = flask.request.form['tags']
@@ -97,15 +113,11 @@ def insert_video_data(data):
 
     query = 'INSERT INTO video (title, description, uploader_id) VALUES (%s, %s, %s)'
 
-    try:
-        vals = (data['title'], data['desc'], data['uploader'])
-    except:
-        vals = (data['title'], data['desc'], 1)
-    finally:
-        cursor.execute(query, vals)
+    vals = (data['title'], data['desc'], data['uploader'])
+    cursor.execute(query, vals)
 
-        conn.commit()
-        id = cursor.lastrowid
+    conn.commit()
+    id = cursor.lastrowid
 
     tag_ids = []
     for tag in data['tags']:
@@ -121,8 +133,8 @@ def insert_video_data(data):
             _temp_id = cursor.fetchall()[0][0]
             tag_ids.append(_temp_id)
     
-    print(tag_ids)
-    print(data['tags'])
+    # print(tag_ids)
+    # print(data['tags'])
 
     for tag_id in tag_ids:
         query = 'INSERT INTO video_tags (video_id, tag_id) VALUES (%s, %s)'
@@ -130,7 +142,7 @@ def insert_video_data(data):
         cursor.execute(query, vals)
         conn.commit()
 
-    
+    conn.close()
     return id
 
 @app.route('/search/', methods=['GET'])
@@ -156,8 +168,8 @@ def profile_page(username):
         user_exists = True
         try:
             root = os.path.realpath(os.path.dirname(__file__))
-            with open(f'{root}/users/{user_data[0]["user_id"]}', 'r') as f:
-                pass
+            with open(f'{root}/users/{user_data[0]["user_id"]}/profile.png', 'r') as f:
+                f.close()
             user_data[0]['img'] = f'/MeTube/users/{user_data[0]["user_id"]}/profile.png'
         except FileNotFoundError:
             user_data[0]['img'] = '/MeTube/assets/blank_user.svg'
@@ -169,4 +181,45 @@ def profile_page(username):
             user_has_videos = False
         else:
             user_has_videos = True
+    conn.close()
     return flask.render_template('profile.html', user_data=user_data, videos=video_data, user_exists=user_exists, username=username, user_has_videos=user_has_videos)
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if(flask.request.method == 'POST'):
+        conn = db_lib.db_connect()
+        cursor = conn.cursor(dictionary=True)
+
+        query = f"SELECT * FROM user WHERE username='{flask.request.form['username']}'"
+        cursor.execute(query)
+        user_data = cursor.fetchall()
+        conn.close()
+
+        if(len(user_data) == 0):
+            failure = True
+            return flask.render_template('login.html', failure=failure)
+        else:
+            user_data = user_data[0]
+            if(user_data['password'] == flask.request.form['password']):
+                flask.session['username'] = flask.request.form['username']
+                flask.session['user_id'] = user_data['user_id']
+                try:
+                    root = os.path.realpath(os.path.dirname(__file__))
+                    with open(f'{root}/users/{user_data["user_id"]}/profile.png', 'r') as f:
+                        f.close()
+                    flask.session['default_img'] = False
+                except FileNotFoundError:
+                    flask.session['default_img'] = True
+                return flask.redirect(flask.url_for('home'))
+            else:
+                failure = True
+                return flask.render_template('login.html', failure=failure)
+    return flask.render_template('login.html')
+
+@app.route('/logout/')
+def logout():
+    if('username' in flask.session):
+        flask.session.pop('username', None)
+        flask.session.pop('user_id', None)
+        flask.session.pop('default_img', None)
+    return flask.redirect(flask.url_for('home'))

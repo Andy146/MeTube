@@ -1,0 +1,25 @@
+<div id='nav'>
+    <a href='/' id='logo_img_link' title='Home'><img src='/MeTube/assets/logo.png' alt='MeTube'></a>
+    <div id='nav_search_div'>
+        <form action="/search/" method="GET">
+            <input type="text" placeholder="Search..." id='nav_search_bar' name='query' value={{query}}>
+
+            <input type='submit' value='Search' id='nav_search_btn'>
+        </form>
+    </div>
+    <div id='nav_end'>
+        <a href="/upload/" id='nav_upload_btn' class='nav_btn'>Upload</a>
+        {% if session['username'] == undefined %}
+            <a href="/login/" id='nav_login_btn' class='nav_btn'>Log in</a>
+        {% else %}
+            <a href="/logout/" id='nav_logout_btn', class='nav_btn'>Log out</a>
+            <img 
+            {% if session["default_img"] %}
+                src="/MeTube/assets/blank_user.svg"
+            {% else %}
+                src="/MeTube/users/{{session['user_id']}}/profile.png"
+            {% endif %}
+            alt="User image" id='nav_profile_image'>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    {% include 'head.html' %}
+</head>
+
+<body>
+    <header></header>
+    <main>
+        {% include 'nav.html' %}
+
+        <form action="/login/" method="POST" id="login_form">
+            <h2>Log in</h2>
+            <input type="text" name="username" id="username" required placeholder="Username">
+            <input type="password" name="password" id="password" required placeholder="Password">
+            <input type="submit" value="Log in">
+            {% if failure %}
+                <h5 style='color:red;'>Wrong username or password, please try again</h5>
+            {% endif %}
+        </form>
+    </main>
+    <footer></footer>
+</body>
+
+</html>

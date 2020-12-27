@@ -51,7 +51,7 @@ main{
     justify-content: flex-end;
 }
 
-#nav_upload_btn{
+.nav_btn{
     border: 1px solid rgba(0,0,0,0.2);
     text-decoration: none;
     color: inherit;
@@ -65,7 +65,7 @@ main{
     border-radius: 5px;
 }
 
-#nav_upload_btn:hover{
+.nav_btn:hover{
     background-color: rgba(0,0,0,0.2);
     border-color: black;
 }
@@ -126,6 +126,19 @@ main{
     justify-content: space-around;
     width: 68vw;
     margin: 15px 0;
+}
+
+#player_uploader_link{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#player_uploader_link span{
+    margin-left: 12px;
 }
 
 #player_video_desc{
@@ -225,4 +238,17 @@ main{
 #user_information span{
     font-size: 28px;
     margin: 0 40px;
+}
+
+#login_form{
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+#login_form input{
+    margin: 10px 0;
+    padding: 5px;
+    width: 100%;
 }
