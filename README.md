@@ -18,5 +18,5 @@ Running on a flask server locally for now, might integrate into django later
 - &#10003; Force log-in during upload
 - &#10003; Make a clickable link under video on /play/ to uploaders profile page
 - &#10003; Add storage of uploader in INSERT-statement during upload
-- Add possibilty to upload profile image for logged in users
+- &#10003; Add possibilty to upload profile image for logged in users
 - &#10003; Add a register page
