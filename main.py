@@ -148,11 +148,10 @@ def insert_video_data(data):
 @app.route('/search/', methods=['GET'])
 def search_page():
     query = flask.request.args['query']
-    # query = quote(query)
     results = search.search(query)
     return flask.render_template('search.html', query=query, results=results)
 
-@app.route('/user/<string:username>')
+@app.route('/user/<string:username>', methods=['GET', 'POST'])
 def profile_page(username):
     conn = db_lib.db_connect()
     cursor = conn.cursor(dictionary=True)
@@ -182,6 +181,21 @@ def profile_page(username):
         else:
             user_has_videos = True
     conn.close()
+
+    if(flask.request.method == 'POST'):
+        img = flask.request.files['profile_img_upload']
+
+        root = os.path.realpath(os.path.dirname(__file__))
+        try:
+            os.makedirs(f'{root}/users/{flask.session["user_id"]}')
+        except:
+            pass
+        finally:
+            flask.session['default_img'] = False
+            img.save(f'{root}/users/{flask.session["user_id"]}/profile.png')
+            return flask.redirect(flask.url_for('profile_page', username=flask.session['username']))
+        
+
     return flask.render_template('profile.html', user_data=user_data, videos=video_data, user_exists=user_exists, username=username, user_has_videos=user_has_videos)
 
 @app.route('/login/', methods=['GET', 'POST'])

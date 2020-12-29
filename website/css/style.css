@@ -21,6 +21,7 @@ main{
     align-items: center;
 }
 
+/* Nav styling */
 #nav{
     display: flex;
     align-items: center;
@@ -79,6 +80,7 @@ main{
     width: 100%;
 }
 
+/* Big preview boxes on home page, profile page etc */
 #preview_container{
     margin-top: 7%;
     display: flex;
@@ -116,6 +118,7 @@ main{
     color: rgba(0,0,0,0.5)
 }
 
+/* Play page */
 #player_main{
     display: flex;
     justify-content: space-between;
@@ -181,6 +184,7 @@ main{
     color: rgba(0,0,0,0.5)
 }
 
+/* Upload page */
 #upload_form{
     display: flex;
     flex-direction: column;
@@ -229,6 +233,7 @@ main{
     display: none;
 }
 
+/* Profile page */
 #user_information{
     display: flex;
     justify-content: space-between;
@@ -244,6 +249,51 @@ main{
     margin: 0 40px;
 }
 
+#profile_img_container{
+    position: relative;
+}
+
+#profile_img_container label{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    opacity: 0;
+    user-select: none;
+    transition: all 0.2s ease-in;
+    font-size: 22px;
+}
+
+#profile_img_container label:hover{
+    opacity: 1;
+}
+
+#profile_img_changer_container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#profile_img_changer_container input[type=submit]{
+    border: none;
+    background: none;
+    transition: all 0.2s ease-in;
+    color: rgba(0,0,255,1)
+}
+
+#profile_img_changer_container input[type=submit]:hover{
+    color: rgb(52, 202, 202);
+    cursor: pointer;
+}
+
+/* Log in/register page */
 #login_form{
     display: flex;
     margin: 0 auto;
