@@ -223,3 +223,26 @@ def logout():
         flask.session.pop('user_id', None)
         flask.session.pop('default_img', None)
     return flask.redirect(flask.url_for('home'))
+
+@app.route('/register/', methods=['GET', 'POST'])
+def register_user():
+    if(flask.request.method == 'POST'):
+        conn = db_lib.db_connect()
+        cursor = conn.cursor(dictionary=True)
+
+        username = flask.request.form['username']
+        password = flask.request.form['password']
+        insert_tuple = (username, password)
+
+        query = "INSERT INTO user (username, password) VALUES (%s, %s)"
+        try:
+            cursor.execute(query, insert_tuple)
+            conn.commit()
+            flask.session['username'] = username
+            flask.session['user_id'] = cursor.lastrowid
+            flask.session['default_img'] = True
+            return flask.redirect(flask.url_for('home'))
+        except mariadb.Error as e:
+            print(e)
+            return flask.render_template('register.html', failure=True)
+    return flask.render_template('register.html')

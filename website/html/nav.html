@@ -13,13 +13,13 @@
             <a href="/login/" id='nav_login_btn' class='nav_btn'>Log in</a>
         {% else %}
             <a href="/logout/" id='nav_logout_btn', class='nav_btn'>Log out</a>
-            <img 
+            <a href="/user/{{session['username']}}" title="Your profile" id='nav_profile_image_link'><img 
             {% if session["default_img"] %}
                 src="/MeTube/assets/blank_user.svg"
             {% else %}
                 src="/MeTube/users/{{session['user_id']}}/profile.png"
             {% endif %}
-            alt="User image" id='nav_profile_image'>
+            alt="User image" id='nav_profile_image'></a>
         {% endif %}
     </div>
 </div>

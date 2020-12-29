@@ -70,9 +70,13 @@ main{
     border-color: black;
 }
 
+#nav_profile_image_link{
+    width: 10%;
+}
+
 #nav_profile_image{
     border-radius: 50%;
-    width: 10%;
+    width: 100%;
 }
 
 #preview_container{

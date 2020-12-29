@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+</head>
+<body>
+    <header></header>
+
+    <main>
+        {% include 'nav.html' %}
+
+        <form action="/register/" method="POST" id="login_form">
+            <h2>Register</h2>
+            <input type="text" name="username" id="username" required placeholder="Username">
+            <input type="password" name="password" id="password" required placeholder="Password">
+            <input type="submit" value="Register">
+            {% if failure %}
+            <h5 style='color:red;'>That username is already taken, please try another</h5>
+            {% endif %}
+            <span>Already have a user? Log in <a href='/login/'>here</a></span>
+        </form>
+    </main>
+
+    <footer></footer>
+</body>
+</html>
