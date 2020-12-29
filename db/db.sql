@@ -52,7 +52,7 @@ CREATE TABLE `tags` (
   PRIMARY KEY (`tag_id`),
   UNIQUE KEY `tag_id_UNIQUE` (`tag_id`),
   UNIQUE KEY `tag_UNIQUE` (`tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `tags` (
 
 LOCK TABLES `tags` WRITE;
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
-INSERT INTO `tags` VALUES (4,'amazing'),(7,'bee'),(8,'bees'),(14,'bees 2'),(27,'bees 3'),(2,'bread'),(11,'clickbait'),(6,'coffee'),(21,'demonetized'),(1,'garlic'),(3,'garlic bread'),(10,'honey'),(22,'i\'m sorry'),(13,'sequel'),(30,'stealing'),(24,'stolen'),(19,'sweet'),(5,'tasty');
+INSERT INTO `tags` VALUES (4,'amazing'),(7,'bee'),(8,'bees'),(14,'bees 2'),(27,'bees 3'),(2,'bread'),(11,'clickbait'),(6,'coffee'),(21,'demonetized'),(35,'fantastic'),(46,'food'),(1,'garlic'),(3,'garlic bread'),(10,'honey'),(22,'i\'m sorry'),(34,'logicstress'),(36,'morning'),(13,'sequel'),(30,'stealing'),(24,'stolen'),(44,'sugar'),(19,'sweet'),(5,'tasty'),(43,'testuser'),(42,'testuser2');
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','123'),(2,'testuser','1234');
+INSERT INTO `user` VALUES (1,'admin','123'),(2,'testuser','1234'),(4,'LogicStress','Passw0rd'),(8,'testuser2','1234');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +108,7 @@ CREATE TABLE `video` (
   UNIQUE KEY `video_id_UNIQUE` (`video_id`),
   KEY `uploader_id_idx` (`uploader_id`),
   CONSTRAINT `uploader_id` FOREIGN KEY (`uploader_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `video` (
 
 LOCK TABLES `video` WRITE;
 /*!40000 ALTER TABLE `video` DISABLE KEYS */;
-INSERT INTO `video` VALUES (1,'Garlic Bread','The most amazing garlic bread can be found here guys, are you ready',1),(2,'Bees','The bees do be comin\'',1),(3,'Bees 2 - The sequel','More bees can only be a good thing right?',1),(4,'Bees 3, I stole this content','Nobody can stop me from stealing this amazing content',2);
+INSERT INTO `video` VALUES (1,'Garlic Bread','The most amazing garlic bread can be found here guys, are you ready',1),(2,'Bees','The bees do be comin\'',1),(3,'Bees 2 - The sequel','More bees can only be a good thing right?',1),(4,'Bees 3, I stole this content','Nobody can stop me from stealing this amazing content',2),(5,'Some nice coffee','You gotta love some nice coffee in the morning, so here it is in video form',4),(6,'Some more tasty honey','Honey honey',8);
 /*!40000 ALTER TABLE `video` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +170,7 @@ CREATE TABLE `video_tags` (
 
 LOCK TABLES `video_tags` WRITE;
 /*!40000 ALTER TABLE `video_tags` DISABLE KEYS */;
-INSERT INTO `video_tags` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(2,7),(2,8),(2,4),(2,10),(2,11),(3,8),(3,13),(3,14),(3,7),(3,10),(3,4),(3,5),(3,19),(3,11),(3,21),(3,22),(4,11),(4,24),(4,8),(4,14),(4,27),(4,8),(4,10),(4,30);
+INSERT INTO `video_tags` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(2,7),(2,8),(2,4),(2,10),(2,11),(3,8),(3,13),(3,14),(3,7),(3,10),(3,4),(3,5),(3,19),(3,11),(3,21),(3,22),(4,11),(4,24),(4,8),(4,14),(4,27),(4,8),(4,10),(4,30),(5,6),(5,5),(5,4),(5,34),(5,35),(5,36),(5,34),(6,10),(6,5),(6,4),(6,35),(6,42),(6,43),(6,44),(6,19),(6,46);
 /*!40000 ALTER TABLE `video_tags` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -183,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-29 12:56:23
+-- Dump completed on 2020-12-29 15:39:31
