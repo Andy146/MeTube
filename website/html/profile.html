@@ -1,46 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'head.html' %}
-</head>
-<body>
-    <main>
-        {% include 'nav.html' %}
-        {% if user_exists %}
-            <div id='user_information'>
-                <span>
-                    {{user_data[0]['username']}}<br>
-                    {{videos|length}} videos
-                </span>
-                {% if session['username']==username %}
-                    <form action="" method="post" id='profile_img_changer_container' enctype="multipart/form-data">
-                        <div id='profile_img_container'>
-                            <img src="{{user_data[0]['img']}}" alt="{{username}}s profile image" width='175px'>
-                            <label for="profile_img_upload">Change profile image</label>
-                        </div>
-                        <input type="file" name="profile_img_upload" id="profile_img_upload" style='display:none;' required>
-                        <input type="submit" value="Save and see new image" title="Save changes">
-                    </form>
-                {% else %}
-                    <img src="{{user_data[0]['img']}}" alt="{{username}}s profile image" width='175px'>
-                {% endif %}
-            </div>
-            {% if user_has_videos %}
-            <div id='preview_container'>
-                {% for preview_list in videos %}
-                <a class='video_preview' href='/play/{{preview_list["video_id"]}}/'>
-                    <img src="/MeTube/videos/{{preview_list['video_id']}}/thumbnail.png" class='preview_thumbnail'>
-                    <div class='preview_title'>{{ preview_list['title'] }}</div>
-                    <div class='preview_desc'>{{ preview_list['description'] }}</div>
-                </a>
-                {% endfor %}
-            </div>
+{% extends 'base.html' %}
+{% block main %}
+    {% if user_exists %}
+        <div id='user_information'>
+            <span>
+                {{user_data[0]['username']}}<br>
+                {{videos|length}} videos
+            </span>
+            {% if session['username']==username %}
+                <form action="" method="post" id='profile_img_changer_container' enctype="multipart/form-data">
+                    <div id='profile_img_container'>
+                        <img src="{{user_data[0]['img']}}" alt="{{username}}s profile image" width='175px'>
+                        <label for="profile_img_upload">Change profile image</label>
+                    </div>
+                    <input type="file" name="profile_img_upload" id="profile_img_upload" style='display:none;' required>
+                    <input type="submit" value="Save and see new image" title="Save changes">
+                </form>
             {% else %}
-                <h2>This user has not posted any videos yet...</h2>
+                <img src="{{user_data[0]['img']}}" alt="{{username}}s profile image" width='175px'>
             {% endif %}
+        </div>
+        {% if user_has_videos %}
+        <div id='preview_container'>
+            {% for preview_list in videos %}
+            <a class='video_preview' href='/play/{{preview_list["video_id"]}}/'>
+                <img src="/MeTube/videos/{{preview_list['video_id']}}/thumbnail.png" class='preview_thumbnail'>
+                <div class='preview_title'>{{ preview_list['title'] }}</div>
+                <div class='preview_desc'>{{ preview_list['description'] }}</div>
+            </a>
+            {% endfor %}
+        </div>
         {% else %}
-            <h1>Sorry, but there is no user named {{username}}</h1>
+            <h2>This user has not posted any videos yet...</h2>
         {% endif %}
-    </main>
-</body>
-</html>
+    {% else %}
+        <h1>Sorry, but there is no user named {{username}}</h1>
+    {% endif %}
+{% endblock %}

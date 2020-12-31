@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="">
-  <head>
-    {% include 'head.html' %}
-  </head>
-  <body>
-    <header></header>
-    <main>
-      {% include 'nav.html' %}
-    
-      <div id='preview_container'>
-        {% for preview_list in previews %}
-          <a class='video_preview' href='/play/{{preview_list["video_id"]}}/'>
-            <img src="/MeTube/videos/{{preview_list['video_id']}}/thumbnail.png" class='preview_thumbnail'>
-            <div class='preview_title'>{{ preview_list['title'] }}</div>
-            <div class='preview_desc'>{{ preview_list['description'] }}</div>
-          </a>
-        {% endfor %}
-      </div>
-    </main>
-    <footer></footer>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% block main %}
+  <div id='preview_container'>
+    {% for preview_list in previews %}
+      <a class='video_preview' href='/play/{{preview_list["video_id"]}}/'>
+        <img src="/MeTube/videos/{{preview_list['video_id']}}/thumbnail.png" class='preview_thumbnail'>
+        <div class='preview_title'>{{ preview_list['title'] }}</div>
+        <div class='preview_desc'>{{ preview_list['description'] }}</div>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}
+

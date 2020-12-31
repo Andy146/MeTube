@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<html lang="">
-  <head>
-    {% include 'head.html' %}
-  </head>
-  <body>
-    <header></header>
-    <main>
-      {% include 'nav.html' %}
-      <div id='player_main'>
-        <div id='player_main_player'>
-          <video controls width='1280' height='720'>
-            <source src="/MeTube/videos/{{video['video_id']}}/video.mp4">
-              Your browser does not support the video player
-          </video>
-          <h1 id='player_video_title'>{{video['title']}}</h1>
-          <a href="/user/{{uploader['username']}}" id='player_uploader_link' title='{{uploader["username"]}}s profile'>
-            <img src="{{uploader['img']}}" alt="{{uploader['username']}}s profile image" width='75px'>
-            <span>{{uploader['username']}}</span>
-          </a>
+{% extends 'base.html' %}
+{% block main %}
+  <div id='player_main'>
+    <div id='player_main_player'>
+      <video controls width='1280' height='720'>
+        <source src="/MeTube/videos/{{video['video_id']}}/video.mp4">
+          Your browser does not support the video player
+      </video>
+      <h1 id='player_video_title'>{{video['title']}}</h1>
+      <a href="/user/{{uploader['username']}}" id='player_uploader_link' title='{{uploader["username"]}}s profile'>
+        <img src="{{uploader['img']}}" alt="{{uploader['username']}}s profile image" width='75px'>
+        <span>{{uploader['username']}}</span>
+      </a>
 
-          <span id='player_video_desc'>{{video['description']}}</span>
+      <span id='player_video_desc'>{{video['description']}}</span>
 
-        </div>
-        <div id='player_main_video_preview_container'>
-          {% for preview_list in previews %}
-            <a class='player_preview' href='/play/{{preview_list["video_id"]}}'>
-              <img src='/MeTube/videos/{{preview_list["video_id"]}}/thumbnail.png' class='player_preview_thumbnail'>
+    </div>
+    <div id='player_main_video_preview_container'>
+      {% for preview_list in previews %}
+        <a class='player_preview' href='/play/{{preview_list["video_id"]}}'>
+          <img src='/MeTube/videos/{{preview_list["video_id"]}}/thumbnail.png' class='player_preview_thumbnail'>
 
-              <h1 class='player_preview_title'>{{preview_list['title']}}</h1>
-            </a>
-          {% endfor %}
-        </div>
-      </div>
-    </main>
-    <footer></footer>
-  </body>
-</html>
+          <h1 class='player_preview_title'>{{preview_list['title']}}</h1>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,50 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'head.html' %}
-</head>
-<body>
-    {% include 'nav.html' %}
+{% extends 'base.html' %}
+{% block main %}
+  <form action='/uploader/' method='POST' enctype="multipart/form-data" id='upload_form'>
 
-    
+      <input type="text" name="title" id="upload_title" required placeholder="Title">
 
-    <main>
-        <form action='/uploader/' method='POST' enctype="multipart/form-data" id='upload_form'>
+      <textarea name="desc" id="desc" cols="30" rows="10" required maxlength="200" placeholder="Description"></textarea>
 
-            <input type="text" name="title" id="upload_title" required placeholder="Title">
+      <label for="video_upload" id="video_upload_label">
+        <p>Click here to add a video</p>
+        <p id="video_upload_filename_indicator">No file selected</p>
+      </label>
+      <input type="file" name="video_upload" id="video_upload" required>
 
-            <textarea name="desc" id="desc" cols="30" rows="10" required maxlength="200" placeholder="Description"></textarea>
+      <label for="thumb_upload" id="thumb_upload_label">
+        <p>Click here to add a thumbnail</p>
+        <p id="thumb_upload_filename_indicator">No file selected</p>
+      </label>
+      <input type="file" name="thumb_upload" id="thumb_upload" required>
 
-            <label for="video_upload" id="video_upload_label">
-              <p>Click here to add a video</p>
-              <p id="video_upload_filename_indicator">No file selected</p>
-            </label>
-            <input type="file" name="video_upload" id="video_upload" required>
-
-            <label for="thumb_upload" id="thumb_upload_label">
-              <p>Click here to add a thumbnail</p>
-              <p id="thumb_upload_filename_indicator">No file selected</p>
-            </label>
-            <input type="file" name="thumb_upload" id="thumb_upload" required>
-
-            <textarea name="tags" id="tags" cols="30" rows="10" placeholder="Video tags, separeted by commas (',')"></textarea>
+      <textarea name="tags" id="tags" cols="30" rows="10" placeholder="Video tags, separeted by commas (',')"></textarea>
 
 
-            <input type="submit" value="Upload">
-        </form>
-    </main>
+      <input type="submit" value="Upload">
+  </form>
+  <script defer>
+    document.getElementById('video_upload').addEventListener('input',
+      function (event) {
+        document.getElementById('video_upload_filename_indicator').innerHTML = document.getElementById('video_upload').files[0].name;
+      });
 
-    <script defer>
-      document.getElementById('video_upload').addEventListener('input',
-        function (event) {
-          document.getElementById('video_upload_filename_indicator').innerHTML = document.getElementById('video_upload').files[0].name;
-        });
-
-      document.getElementById('thumb_upload').addEventListener('input',
-        function (event) {
-          document.getElementById('thumb_upload_filename_indicator').innerHTML = document.getElementById('thumb_upload').files[0].name;
-        });
-    </script>
-    
-</body>
-</html>
+    document.getElementById('thumb_upload').addEventListener('input',
+      function (event) {
+        document.getElementById('thumb_upload_filename_indicator').innerHTML = document.getElementById('thumb_upload').files[0].name;
+      });
+  </script>
+{% endblock %}
