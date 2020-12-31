@@ -1,7 +1,7 @@
 # MeTube
 YouTube clone for IT class
 
-Running on a flask server locally for now, might integrate into django later
+Running on flask-server with mariadb as the database-server. Certain things will behave differently from YouTube, but for the most part this seeks to mimic as much of YouTube's functionality as possible, although probably way less efficient
 
 ### To do list
 - &#10003; Search by title and desc
