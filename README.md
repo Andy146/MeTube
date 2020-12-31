@@ -6,10 +6,10 @@ Running on a flask server locally for now, might integrate into django later
 ### To do list
 - &#10003; Search by title and desc
 - &#10003; Add tags during upload
-- &#10003; Searh with tags as well
+- &#10003; Search with tags as well
 - &#10003; Make logo
 - Make auto-thumbnail creation (low priority)
-- Add profile-support (low priority, see other list for details)
+- &#10003; Add profile-support (low priority, see other list for details)
 
 
 ### Profile support to do
